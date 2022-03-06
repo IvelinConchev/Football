@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football", "Football\Footba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Core", "Football.Core\Football.Core.csproj", "{4C7CB6DE-FB82-4F07-BF82-7D2F778DCAC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.Infrastructure", "Football.Infrastructure\Football.Infrastructure.csproj", "{6F4EE2E8-47C7-4BAB-9D71-400F485500B1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{4C7CB6DE-FB82-4F07-BF82-7D2F778DCAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C7CB6DE-FB82-4F07-BF82-7D2F778DCAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C7CB6DE-FB82-4F07-BF82-7D2F778DCAC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F4EE2E8-47C7-4BAB-9D71-400F485500B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F4EE2E8-47C7-4BAB-9D71-400F485500B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F4EE2E8-47C7-4BAB-9D71-400F485500B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F4EE2E8-47C7-4BAB-9D71-400F485500B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
