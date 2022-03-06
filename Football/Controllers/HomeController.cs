@@ -1,9 +1,9 @@
-﻿using Football.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace Football.Controllers
+﻿namespace Football.Controllers
 {
+    using Football.Core.Constants;
+    using Football.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +15,8 @@ namespace Football.Controllers
 
         public IActionResult Index()
         {
+            ViewData[MessageConstant.ErrorMessage] = "Нещо се счупи!";
+
             return View();
         }
 
