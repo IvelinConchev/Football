@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace Football.Data.Migrations
+namespace Football.Infrastructure.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

@@ -1,5 +1,5 @@
 using Football.Core.Constants;
-using Football.Data;
+using Football.Infrastructure.Data;
 using Football.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
