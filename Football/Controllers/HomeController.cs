@@ -4,7 +4,7 @@
     using Football.Models;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -15,7 +15,7 @@
 
         public IActionResult Index()
         {
-            ViewData[MessageConstant.ErrorMessage] = "Нещо се счупи!";
+            ViewData[MessageConstant.SuccessMessage] = "Браво";
 
             return View();
         }
