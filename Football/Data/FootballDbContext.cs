@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Football.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class FootballDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public FootballDbContext(DbContextOptions<FootballDbContext> options)
             : base(options)
         {
         }
