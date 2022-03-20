@@ -1,9 +1,7 @@
 ﻿namespace Football.Controllers
 {
-    using Football.Core.Constants;
     using Football.Core.Contracts;
     using Football.Infrastructure.Data.Identity;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -28,23 +26,6 @@
         public IActionResult Index()
         {
             return View();
-        }
-
-        [Authorize(Roles = UserConstants.Roles.Administrator)]
-        public async Task<IActionResult> ManageUsers()
-        {
-            var users = await service.GetUsers();
-
-            return Ok(users);
-        }
-        public async Task<IActionResult> CreateRole()
-        {
-           //await roleManager.CreateAsync(new IdentityRole()
-           // {
-           //     Name = "Administrator"
-           // });
-
-            return Ok();
         }
     }
 }
