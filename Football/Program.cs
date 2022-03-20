@@ -21,8 +21,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddAuthentication()
     .AddFacebook(options =>
     {
-        options.AppId = builder.Configuration.GetValue<string>("AppId");
-        options.AppSecret = builder.Configuration.GetValue<string>("AppSecret");
+        options.AppId = builder.Configuration.GetValue<string>("Facebook:AppId");
+        options.AppSecret = builder.Configuration.GetValue<string>("Facebook:AppSecret");
     });
 
 builder.Services.AddControllersWithViews()
