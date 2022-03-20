@@ -1,5 +1,6 @@
 using Football.Core.Constants;
 using Football.Infrastructure.Data;
+using Football.Infrastructure.Data.Identity;
 using Football.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +13,20 @@ builder.Services.AddDbContext<FootballDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+})
     .AddEntityFrameworkStores<FootballDbContext>();
+builder.Services.AddAuthentication()
+    .AddFacebook(options =>
+    {
+        options.AppId = builder.Configuration.GetValue<string>("AppId");
+        options.AppSecret = builder.Configuration.GetValue<string>("AppSecret");
+        options.AppId = "246743901004774";
+        options.AppSecret = "dd8cdba0062bf8a7ed76b385df39060c";
+    });
+
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
