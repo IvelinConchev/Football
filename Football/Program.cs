@@ -23,8 +23,6 @@ builder.Services.AddAuthentication()
     {
         options.AppId = builder.Configuration.GetValue<string>("AppId");
         options.AppSecret = builder.Configuration.GetValue<string>("AppSecret");
-        options.AppId = "246743901004774";
-        options.AppSecret = "dd8cdba0062bf8a7ed76b385df39060c";
     });
 
 builder.Services.AddControllersWithViews()
