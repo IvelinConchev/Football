@@ -1,4 +1,5 @@
 using Football.Core.Constants;
+using Football.Extensions;
 using Football.Infrastructure.Data;
 using Football.Infrastructure.Data.Identity;
 using Football.ModelBinders;
@@ -8,17 +9,19 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<FootballDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddApplicationDbContext(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FootballDbContext>();
+
 builder.Services.AddAuthentication()
     .AddFacebook(options =>
     {
@@ -33,6 +36,9 @@ builder.Services.AddControllersWithViews()
         options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider(FormatingConstant.NormalDateFormat));
         options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
     });
+
+builder.Services.ApplicationServices();
+
 
 var app = builder.Build();
 
@@ -59,6 +65,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
+
+app.PrepareDatabase();
+
 
 app.Run();
