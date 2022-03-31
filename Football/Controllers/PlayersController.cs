@@ -3,15 +3,21 @@
     using Football.Infrastructure.Data;
     using Football.Infrastructure.Data.Models;
     using Football.Models.Players;
+    using Football.Models.Teams;
     using Microsoft.AspNetCore.Mvc;
     using FileSystem = System.IO.File;
     public class PlayersController : Controller
     {
         private readonly FootballDbContext data;
 
-        public PlayersController(FootballDbContext _data)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public PlayersController(
+            FootballDbContext _data,
+            IWebHostEnvironment _webHostEnvironment)
         {
             this.data = _data;
+            this.webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult All([FromQuery] AllPlayerQueryModel query)
@@ -85,30 +91,22 @@
         });
 
         [HttpPost]
-        public IActionResult Add(AddPlayerFormModel player, IFormFile image)
+        public IActionResult Add(AddPlayerFormModel player)
         {
-            //if (image != null || image.Length > 2 * 1024 * 1024)
-            //{
-            //    this.ModelState.AddModelError("Image", "The image is not valid. It is required should be less than 2 MB.");
-            //}
-
-            //var imageInMemory = new MemoryStream();
-            //image.CopyTo(imageInMemory);
-            //var imageBytes = imageInMemory.ToArray();
-
-            //image.CopyTo(FileSystem.OpenWrite($"/images/{image.FileName}"));
 
             if (!this.data.Positions.Any(p => p.Id == player.PositionId))
             {
                 this.ModelState.AddModelError(nameof(player.PositionId), "Position does not exist");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 player.Positions = this.GetPlayerPositions();
 
                 return View(player);
             }
+
+            string stringFileName = UploadFile(player);
 
             var playerData = new Player
             {
@@ -119,7 +117,7 @@
                 Height = player.Height,
                 Goal = player.Goal,
                 Age = player.Age,
-                Image = player.Image,
+                Image = stringFileName,
                 Nationality = player.Nationality,
                 ShirtNumber = player.ShirtNumber,
                 Description = player.Description,
@@ -134,6 +132,23 @@
             return RedirectToAction(nameof(All));
         }
 
+        private string UploadFile(AddPlayerFormModel model)
+        {
+            string fileName = null;
+            if (model.Image != null)
+            {
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "img");
+                fileName = Guid.NewGuid().ToString() + "-" + model.Image.FileName;
+                string filePath = Path.Combine(uploadDir, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Image.CopyTo(fileStream);
+                }
+            }
+
+            return fileName;
+        }
         private IEnumerable<PlayerPositionViewModel> GetPlayerPositions()
        => this.data
             .Positions

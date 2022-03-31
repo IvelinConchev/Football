@@ -1,7 +1,8 @@
-﻿@model AllPlayerQueryModel
+﻿@using Football.Models.Teams
+@model AllTeamQueryModel
 
 @{
-    ViewData["Title"] = "All Players";
+    ViewData["Title"] = "All Teams";
 }
 
 <form method="get">
@@ -12,7 +13,7 @@
                 <select asp-for="Team" class="form-control">
                     <option value="">All</option>
 
-                    @foreach (var team in Model.Teams)
+                    @foreach (var team in Model.Names)
                     {
                         <option value="@team">@team</option>
                     }
@@ -29,10 +30,10 @@
             <div class="form-group">
                 <label asp-for="Sorting"></label>
                 <select asp-for="Sorting" class="form-control">
-                    <option value="0" selected>First Name Middle Name Last Name</option>
-                    <option value="1" selected>Team</option>
-                    <option value="2" selected>Position</option>
-                    <option value="3" selected>Description</option>
+                    <option value="0" selected>Name</option>
+                    <option value="1" selected>Nickname</option>
+                    <option value="2" selected>Champion</option>
+                    <option value="3" selected>Win</option>
                 </select>
             </div>
         </div>
@@ -46,13 +47,13 @@
         previousPage = 1;
     }
 
-    var maxPage = Math.Ceiling((double)Model.TotalPlayers / AllPlayerQueryModel.PlayerPerPage);
+    var maxPage = Math.Ceiling((double)Model.TotalTeams / AllTeamQueryModel.TeamPerPage);
 }
 
 <div class="row mb-5">
     <div class="col-md-6">
         <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-           asp-controller="Players"
+           asp-controller="Teams"
            asp-action="All"
            asp-route-currentPage="@previousPage"
            asp-route-team="@Model.Team"
@@ -61,7 +62,7 @@
     </div>
     <div class="col-md-6">
         <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
-           asp-controller="Players"
+           asp-controller="Teams"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-team="@Model.Team"
@@ -73,20 +74,19 @@
 
     <div class="row">
 
-        @foreach (var player in Model.Players)
+        @foreach (var team in Model.Teams)
         {
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <img src="~/img/@player.Image" alt=" @player.FirstName @player.MiddleName @player.LastName - @player.Age @player.Nationality @player.Team (@player.Position)" width="200" height="300">
+                    <img src="~/img/@team.Image" alt="@team.Name @team.NickName @team.AwayKit - @team.HomeKit ">
+                    @*<img src="@team.Image" alt="@team.Name @team.NickName @team.AwayKit - @team.HomeKit ">*@
                     <div class="card-body text-center">
-                        <h5 class="card-title text-center">(№@player.ShirtNumber) @player.FirstName  @player.MiddleName @player.LastName отбор - @player.Team @player.Position (@player.Age г.)</h5>
+                        <h5 class="card-title text-center">@team.Name  @team.NickName @team.AwayKit</h5>
                         <br />
-                        <a asp-controller="Players" asp-action="Details" asp-route-id=@player.Id class="btn btn-primary">Виж повече</a>
+                        <a asp-controller="Teams" asp-action="Details" asp-route-id=@team.Id class="btn btn-primary">Виж повече</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-
-

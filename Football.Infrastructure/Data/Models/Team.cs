@@ -19,7 +19,7 @@
         public string Name { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         [StringLength(TeamWebSiteMaxLength)]
         public string? WebSite { get; set; }
