@@ -37,7 +37,7 @@
         public double? Height { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         public int Goal { get; set; }
 

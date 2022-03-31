@@ -1,8 +1,82 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "My Football Team";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    var players = Model.Players;
+    var firstPlayer = players.Any() ? players[0] : null;
+    var secondPlayer = players.Count > 1 ? players[1] : null;
+    var thirdPlayer = players.Count > 2 ? players[2] : null;
+}
+
+@if (!players.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the best place for Football Statistic</h1>
+        <p class="lead">There are no footbals in system currently available.</p>
+        <hr class="my-4">
+        <a asp-controller="Players" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Player</a>
+    </div>
+}
+
+<div class="mb-5">
 </div>
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        @if (firstPlayer != null)
+        {
+            <div class="carousel-item active">
+                <img src="@firstPlayer.ImageUrl" class="d-block w-100" alt="@firstPlayer.FirstName @firstPlayer.LastName @firstPlayer.Position @firstPlayer.Nationality @firstPlayer.Team @firstPlayer.Age">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@firstPlayer.Id">@firstPlayer.FirstName @firstPlayer.LastName - @firstPlayer.Position - @firstPlayer.Nationality - @firstPlayer.Team (@firstPlayer.Age)</a></h5>
+                </div>
+            </div>
+        }
+
+        @if (secondPlayer != null)
+        {
+            <div class="carousel-item">
+                <img src="@secondPlayer.ImageUrl" class="d-block w-100" alt="@secondPlayer.FirstName @secondPlayer.LastName @secondPlayer.Position @secondPlayer.Nationality @secondPlayer.Team (@secondPlayer.Age)">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@firstPlayer.Id">@secondPlayer.FirstName @secondPlayer.LastName @secondPlayer.Position @secondPlayer.Nationality @secondPlayer.Team (@secondPlayer.Age)</a></h5>
+                </div>
+            </div>
+        }
+        @if (thirdPlayer != null)
+        {
+            <div class="carousel-item">
+                <img src="@thirdPlayer.ImageUrl" class="d-block w-100" alt="@thirdPlayer.FirstName @thirdPlayer.LastName @thirdPlayer.Position @thirdPlayer.Nationality @thirdPlayer.Team @thirdPlayer.Age">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@thirdPlayer.Id">@thirdPlayer.FirstName @thirdPlayer.LastName @thirdPlayer.Position @thirdPlayer.Nationality @thirdPlayer.Team (@thirdPlayer.Age)</a></h5>
+                </div>
+            </div>
+        }
+        <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </button>
+    </div>
+
+    <div class="mb-5">
+    </div>
+
+    <div class="jumbotron">
+        <div class="row">
+            <h2 class="col-md-4 text-center">
+                @Model.TotalPlayers Players
+            </h2>
+            <h2 class="col-md-4 text-center">
+                @Model.TotalUsers Users
+            </h2>
+            <h2 class="col-md-4 text-center">
+                @Model.TotalSumPlayers SumPlayers
+            </h2>
+        </div>
+    </div>
