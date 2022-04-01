@@ -21,7 +21,7 @@
         public string PostCode { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         [Required]
         public string Desctription { get; set; }

@@ -16,12 +16,15 @@
         public string Name { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
 
         public int Capacity { get; set; }
 
         [Required]
         [StringLength(StadiumAddressMaxLength)]
         public string Address { get; set; }
+
+        [Required]
+        public string Description { get; set; }
     }
 }
