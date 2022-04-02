@@ -43,7 +43,34 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
+                        <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" placeholder="First Name" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" placeholder="Last Name" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input asp-for="Input.FullName" class="form-control" autocomplete="username" aria-required="true" placeholder="Full Name" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                                <span class="fas fa-users"></span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="input-group mb-3">
                         <input asp-for="Input.Password" class="form-control" autocomplete="username" aria-required="true" placeholder="Password" />
                         <div class="input-group-append">
                             <div class="input-group-text">

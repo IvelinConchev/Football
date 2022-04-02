@@ -4,8 +4,14 @@
     {
         public class User
         {
+            public const int ApplicationUserFirstNameMinLength = 3;
             public const int ApplicationUserFirstNameMaxLength = 50;
-            public const int ApplicationUserLaststNameMaxLength = 50;
+            public const int ApplicationUserLastNameMinLength = 3;
+            public const int ApplicationUserLastNameMaxLength = 50;
+            public const int ApplicationUserFullNameMinLength = 3;
+            public const int ApplicationUserFullNameMaxLength = 50;
+            public const int PasswordUserMinLength = 6;
+            public const int PasswordUserMaxLength = 100;
         }
         public class DefaultLengthForKeyGuid
         {

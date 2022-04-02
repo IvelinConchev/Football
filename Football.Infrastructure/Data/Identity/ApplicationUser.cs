@@ -10,7 +10,10 @@
         [StringLength(ApplicationUserFirstNameMaxLength)]
         public string? FirstName { get; set; }
 
-        [StringLength(ApplicationUserLaststNameMaxLength)]
+        [StringLength(ApplicationUserLastNameMaxLength)]
         public string? LastName { get; set; }
+
+        [StringLength(ApplicationUserFullNameMaxLength)]
+        public string? FullName { get; set; }
     }
 }
