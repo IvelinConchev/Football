@@ -33,6 +33,7 @@
                 cityQuery = cityQuery.Where(p => (p.Name).ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            //TODO or _=>
             cityQuery = query.Sorting switch
             {
                 CitySorting.Name => cityQuery.OrderBy(p => p.Name),
@@ -80,7 +81,7 @@
         [HttpPost]
         public IActionResult Add(AddCityFormModel city)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 city.Teams = this.GetCityTeams();
 
@@ -98,6 +99,7 @@
             };
 
             this.data.Add(cityData);
+
             this.data.SaveChanges();
 
             return RedirectToAction(nameof(All));

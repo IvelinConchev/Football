@@ -18,40 +18,42 @@
                 <div class="form-group">
                     <label asp-for="Image"></label>
                     <input asp-for="Image" class="form-control" placeholder="Stoichkov, Dimitrov, etc...">
-                     <span asp-validation-for="Image" class="small text-danger"></span>
+                    <span asp-validation-for="Image" class="small text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Capacity"></label>
                     <input asp-for="Capacity" class="form-control" placeholder="Stoichkov, Messi, etc...">
-                     <span asp-validation-for="Capacity" class="small text-danger"></span>
+                    <span asp-validation-for="Capacity" class="small text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Address"></label>
                     <input asp-for="Address" class="form-control" placeholder="Stoichkov, Messi, etc...">
-                     <span asp-validation-for="Capacity" class="small text-danger"></span>
+                    <span asp-validation-for="Capacity" class="small text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Description"></label>
                     <textarea asp-for="Description" rows="4" class="form-control" placeholder="This is the big football."></textarea>
-                     <span asp-validation-for="Description" class="small text-danger"></span>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                    <label asp-for="PositionId"></label>
-    <select asp-for="PositionId" class="form-control"> 
-                    @foreach (var position in Model.Positions)
-                    {
-              <option value="@position.Id">@position.Name</option>
-                    }
-    </select>
-    <span asp-validation-for="PositionId" class="small text-danger"></span>
- </div>*@
-            <br />
+                <div class="form-group">
+                    <label asp-for="CityId"></label>
+                    <select asp-for="CityId" class="form-control">
+                        @foreach (var position in Model.Cities)
+                        {
+                            <option value="@position.Id">@position.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CityId" class="small text-danger"></span>
+                </div>
+                <br />
 
-           @* <input type="file" name="Image" />*@
-            <input class="btn btn-primary" type="submit" value="Save" />
-        </form>
+                @* <input type="file" name="Image" />*@
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </form>
             <br />
+        </div>
     </div>
+</div>

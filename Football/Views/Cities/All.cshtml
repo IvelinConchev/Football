@@ -4,7 +4,6 @@
     ViewData["Title"] = "All Cities";
 }
 
-
 <form method="get">
     <div class="row">
         <div class="form-group col-md-4">
@@ -30,10 +29,10 @@
             <div class="form-group">
                 <label asp-for="Sorting"></label>
                 <select asp-for="Sorting" class="form-control">
-                    <option value="0" selected>Name</option>
-                    <option value="1" selected>PostCode</option>
-                    @* <option value="2" selected>Position</option>
-                        <option value="3" selected>Description</option>*@
+                    <option value="0" selected>First Name Middle Name Last Name</option>
+                    <option value="1" selected>Team</option>
+                    <option value="2" selected>Position</option>
+                    <option value="3" selected>Description</option>
                 </select>
             </div>
         </div>
@@ -73,20 +72,18 @@
     <br />
 
     <div class="row">
-
         @foreach (var city in Model.Cities)
         {
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <img src="@city.Image" alt="@city.Name @city.PostCode">
+                    <img src="~/img/@city.Image" alt="@city.Name @city.PostCode">
                     <div class="card-body text-center">
                         <h5 class="card-title text-center">@city.Name  @city.PostCode</h5>
                         <br />
-                        <a asp-controller="Players" asp-action="Details" asp-route-id=@city.Id class="btn btn-primary">Виж повече</a>
+                        <a asp-controller="Cities" asp-action="Details" asp-route-id=@city.Id class="btn btn-primary">Виж повече</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-

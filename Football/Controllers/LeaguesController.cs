@@ -30,8 +30,8 @@
 
             if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
-                leagueQuery = leagueQuery.Where(l => l.Name.ToLower().Contains(query.SearchTerm.ToLower())
-                || l.Address.ToLower().Contains(query.SearchTerm.ToLower()));
+                leagueQuery = leagueQuery.Where(l => l.Name.ToLower().Contains(query.SearchTerm.ToLower()));
+                //|| l.Address.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
             leagueQuery = query.Sorting switch
@@ -131,6 +131,5 @@
                 Name = t.Name
             })
             .ToList();
-
     }
 }

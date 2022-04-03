@@ -19,22 +19,34 @@
                     <label asp-for="PostCode"></label>
                     <input asp-for="PostCode" class="form-control">
                     <span asp-validation-for="PostCode" class="small text-danger"></span>
-                     <br />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="Image"></label>
+                    <input asp-for="Image" class="form-control">
+                    <span asp-validation-for="Image" class="small text-danger"></span>
+                    <br />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="This is the big football."></textarea>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
 
-            <div class="form-group">
+                <div class="form-group">
                     <label asp-for="TeamId"></label>
-    <select asp-for="TeamId" class="form-control"> 
-                    @foreach (var team in Model.Teams)
-                    {
-              <option value="@team.Id">@team.Name</option>
-                    }
-    </select>
-    <span asp-validation-for="TeamId" class="small text-danger"></span>
- </div>
+                    <select asp-for="TeamId" class="form-control">
+                        @foreach (var team in Model.Teams)
+                        {
+                            <option value="@team.Id">@team.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="TeamId" class="small text-danger"></span>
+                </div>
+                <br />
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </form>
             <br />
-            <input class="btn btn-primary" type="submit" value="Save" />
-        </form>
-            <br />
+        </div>
     </div>
-</div>
 </div>
