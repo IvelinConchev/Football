@@ -61,6 +61,12 @@
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Roles(UserRolesViewModel model)
+        {
+            return Ok(model);
+        }
+
         //GETattrubute
         public async Task<IActionResult> Edit(string id)
         {
@@ -70,7 +76,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, UserEditViewModel model)
+        public async Task<IActionResult> Edit(UserEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -88,6 +94,7 @@
 
             return View(model);
         }
+
         public async Task<IActionResult> CreateRole()
         {
             await roleManager.CreateAsync(new IdentityRole()
