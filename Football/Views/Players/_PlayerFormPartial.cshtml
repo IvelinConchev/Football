@@ -1,0 +1,95 @@
+﻿@model PlayerFormModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Hristo, Leonel, etc...">
+                    <span asp-validation-for="FirstName" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MiddleName"></label>
+                    <input asp-for="MiddleName" class="form-control" placeholder="Stoichkov, Dimitrov, etc...">
+                    <span asp-validation-for="MiddleName" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="Stoichkov, Messi, etc...">
+                    <span asp-validation-for="LastName" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Age"></label>
+                    <input asp-for="Age" class="form-control" placeholder="23">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Weight"></label>
+                    <input asp-for="Weight" class="form-control" placeholder="66">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Height"></label>
+                    <input asp-for="Height" class="form-control" placeholder="1.84">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Image"></label>
+                    <input asp-for="Image" class="form-control">
+                    <span asp-validation-for="Image" class="small text-danger"></span>
+                    <br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Goal"></label>
+                    <input asp-for="Goal" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ShirtNumber"></label>
+                    <input asp-for="ShirtNumber" class="form-control" placeholder="From 1 to 99">
+                    <span asp-validation-for="ShirtNumber" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Nationality"></label>
+                    <input asp-for="Nationality" class="form-control" placeholder="Bulgarian, American, etc...">
+                    <span asp-validation-for="Nationality" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Team"></label>
+                    <input asp-for="Team" class="form-control" placeholder="Етър, ЦСКА, Барселона...">
+                    <span asp-validation-for="Team" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="This is the big football."></textarea>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PositionId"></label>
+                    <select asp-for="PositionId" class="form-control">
+                        @foreach (var position in Model.Positions)
+                        {
+                            <option value="@position.Id">@position.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="PositionId" class="small text-danger"></span>
+                </div>
+                <br />
+
+                @* <input type="file" name="Image" />*@
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </form>
+            <br />
+        </div>
+    </div>
+</div>

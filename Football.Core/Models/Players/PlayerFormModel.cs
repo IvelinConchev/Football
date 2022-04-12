@@ -1,9 +1,14 @@
-﻿namespace Football.Models.Players
+﻿namespace Football.Core.Models.Players
 {
+    using Football.Core.Services.Players;
+    using Microsoft.AspNetCore.Http;
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Football.Infrastructure.Data.DataConstants.Player;
-    public class AddPlayerFormModel
+
+    public class PlayerFormModel
     {
         [Display(Name = "Име")]
         [Required]
@@ -30,7 +35,7 @@
         [Display(Name = "Височина")]
         public double Height { get; init; }
 
-        //[Display(Name = "Image")]
+        [Display(Name = "Image")]
         //[Required]
         //[Url]
         public IFormFile Image { get; set; }
@@ -62,6 +67,6 @@
         [Display(Name = "Позиция")]
         public Guid PositionId { get; init; }
 
-        public IEnumerable<PlayerPositionViewModel> Positions { get; set; }
+        public IEnumerable<PlayerPositionsServiceModel> Positions { get; set; }
     }
 }

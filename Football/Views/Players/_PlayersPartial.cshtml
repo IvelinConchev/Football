@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PlayerServiceModel>
+
+<div class="row">
+
+    @foreach (var player in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="~/img/@player.Image" alt=" @player.FirstName @player.MiddleName @player.LastName - @player.Age @player.Nationality @player.Team (@player.PositionName)" width="200" height="300">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">(№@player.ShirtNumber) @player.FirstName  @player.MiddleName @player.LastName отбор - @player.Team @player.PositionName (@player.Age г.)</h5>
+                    <br />
+                    <a asp-controller="Players" asp-action="Details" asp-route-id=@player.Id class="btn btn-primary">Виж повече</a>
+                @if (ViewBag.AllowPlayerEdit == true || User.IsAdmin())
+                    {
+                        <a asp-controller="Players" asp-action="Edit" asp-route-id="@player.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Players" asp-action="Delete" asp-route-id="@player.Id" class="btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,6 +1,10 @@
 ﻿namespace Football.Extensions
 {
     using Football.Core.Contracts;
+    using Football.Core.Services.Managers;
+    using Football.Core.Services.Players;
+    using Football.Core.Services.Positions;
+    using Football.Core.Services.Statistics;
     using Football.Infrastructure.Data;
     using Football.Infrastructure.Repositories;
     using Football.Services;
@@ -23,10 +27,14 @@
 
         public static IServiceCollection ApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IFootballDbRepository, FootballDbRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IManagerService, ManagerService>();
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IPositionService, PositionService>();
 
-           return services;
+            return services;
         }
 
         public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration config)

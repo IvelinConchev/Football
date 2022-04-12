@@ -44,5 +44,7 @@
         public DbSet<StadiumCity> StadiumCities { get; set; }
 
         public DbSet<TeamCity> TeamCities { get; set; }
+
+        public DbSet<Manager> Managers { get; set; }
     }
 }

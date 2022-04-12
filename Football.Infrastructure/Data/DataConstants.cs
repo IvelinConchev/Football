@@ -79,18 +79,25 @@
             public const int CityPostCodeMaxLength = 10;
             public const int CityDescriptionMinLength = 2;
         }
-        //European League
-        public const int EuropeanLeagueMaxLength = 25;
 
         public class Position
         {
             public const int PositionNameMaxLength = 50;
         }
 
-        //Country TRY
-        public const int CountryCodeCapitalMaxLength = 85;
+        public class Manager
+        {
+            public const int ManagerNameMinLength = 2;
+            public const int ManagerNameMaxLength = 25;
+            public const int PhoneNumberMinLength = 6;
+            public const int PhoneNumberMaxLength = 30;
+        }
 
-        public const int CountryNameMaxLength = 100;
-        public const int CountryNameMinLength = 100;
+        public class Roles
+        {
+            public const string RoleNameAdministrator = "Administrator";
+            public const string RoleNameManagers = "Managers";
+            public const string RoleNameUser = "User";
+        }
     }
 }

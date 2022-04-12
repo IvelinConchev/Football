@@ -1,10 +1,23 @@
-﻿<nav class="mt-2">
+﻿@using Football.Extensions
+@using Football.Infrastructure.Data.Identity
+@using Football.Core.Services.Managers
+@using Microsoft.AspNetCore.Identity
+@using Football.Infrastructure.Data
+@using Football.Core.Contracts
+@using Football.Infrastructure.Data.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IManagerService Managers
+
+
+<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
             <a href="/" class="nav-link active">
-              <i class="fas fa-home"></i>
+                <i class="fas fa-home"></i>
                 <p>
                     Home
                 </p>
@@ -12,3 +25,175 @@
         </li>
     </ul>
 </nav>
+
+        @if (SignInManager.IsSignedIn(User))
+{
+    var userId = User.Id();
+    var userIsManager = Managers.isManager(userId);
+    var userIsAdmin = User.IsAdmin();
+
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+                <a href="/Managers/Become" class="nav-link active">
+                    <i class="fas fa-phone"></i>
+                    <p>
+                        Become Manager
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+                <a href="/Identity/Account/Manage" class="nav-link active">
+                    <i class="fas fa-user"></i>
+                    <p>
+                        Account
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    @if (userIsManager)
+    {
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Players/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Players
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Teams/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Teams
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Cities/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Cities
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Leagues/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Leagues
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Stadiums/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Stadiums
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
+    else if (userIsAdmin)
+    {
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="/Players/Mine" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            My Players
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @*<nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Managers" asp-action="Become"></a>
+            <i class="fas fa-user"></i>
+            </li>
+            </ul>
+            </nav>*@
+    }
+
+    @*<li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
+        </li>
+        <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = ""})">
+        <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+        </li>*@
+    else
+    {
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="Identity/Account/Register" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            Register
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="Identity/Account/Login" class="nav-link active">
+                        <i class="fas fa-user"></i>
+                        <p>
+                            Login
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        @*<li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>*@
+    }
+
+}
+@*</ul>
+    }*@

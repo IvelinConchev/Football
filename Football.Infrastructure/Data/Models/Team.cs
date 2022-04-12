@@ -63,5 +63,7 @@
         public Player Player { get; set; }
 
         public IList<League> Leagues { get; set; } = new List<League>();
+
+        public ICollection<TeamCity> TeamCities { get; set; } = new List<TeamCity>();
     }
 }

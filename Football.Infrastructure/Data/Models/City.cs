@@ -25,5 +25,9 @@
 
         [Required]
         public string Desctription { get; set; }
+
+        public IList<TeamCity> TeamCities { get; set; } = new List<TeamCity>();
+
+        public ICollection<StadiumCity> StadiumCities { get; set; } = new List<StadiumCity>();
     }
 }

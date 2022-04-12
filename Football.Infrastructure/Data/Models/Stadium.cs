@@ -26,5 +26,7 @@
 
         [Required]
         public string Description { get; set; }
+
+        public ICollection<StadiumCity> StadiumCities { get; set; } = new List<StadiumCity>();
     }
 }

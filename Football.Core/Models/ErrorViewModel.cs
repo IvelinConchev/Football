@@ -1,4 +1,4 @@
-namespace Football.Models
+﻿namespace Football.Core.Models
 {
     public class ErrorViewModel
     {
