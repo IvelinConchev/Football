@@ -1,18 +1,20 @@
-﻿namespace Football.Models.Teams
+﻿namespace Football.Core.Models.Teams
 {
+    using Football.Core.Services.Teams;
+    using Microsoft.AspNetCore.Http;
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Football.Infrastructure.Data.DataConstants.Team;
-    public class AddTeamFormModel
+    public class TeamFormModel
     {
         [Display(Name = "Име")]
         [Required]
         [StringLength(TeamNameMaxLength, MinimumLength = TeamNameMinLength, ErrorMessage = "Minimum: {2}, Maximum: {1}")]
         public string Name { get; set; }
 
-        //[Display(Name = "Image URL")]
-        //[Required]
-        //[Url]
+        [Display(Name = "Снимка")]
         public IFormFile Image { get; set; }
 
         [Display(Name = "Уеб сайт")]
@@ -72,6 +74,6 @@
         [Display(Name = "Отбори на играчи")]
         public Guid PlayerId { get; init; }
 
-        public IEnumerable<TeamPlayerViewModel> Players { get; set; }
+        public IEnumerable<TeamPlayersServiceModel> Players { get; set; }
     }
 }

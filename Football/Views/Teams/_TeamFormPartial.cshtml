@@ -1,0 +1,101 @@
+﻿@model TeamFormModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Image"></label>
+                    <input asp-for="Image" class="form-control">
+                     <span asp-validation-for="Image" class="small text-danger"></span>
+                     <br />
+
+                <div class="form-group">
+                    <label asp-for="WebSite"></label>
+                    <input asp-for="WebSite" class="form-control" placeholder="www.abv.bg...,">
+                     <span asp-validation-for="WebSite" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LogoUrl"></label>
+                    <input asp-for="LogoUrl" class="form-control">
+                     <span asp-validation-for="LogoUrl" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HomeKit"></label>
+                    <input asp-for="HomeKit" class="form-control" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AwayKit"></label>
+                    <input asp-for="AwayKit" class="form-control" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NickName"></label>
+                    <input asp-for="NickName" class="form-control" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="This is the big football team."></textarea>
+                     <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address"></label>
+                    <input asp-for="Address" class="form-control" placeholder="www.abv.bg...,">
+                     <span asp-validation-for="Address" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="HeadCoach"></label>
+                    <input asp-for="HeadCoach" class="form-control">
+                     <span asp-validation-for="HeadCoach" class="small text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Champion"></label>
+                    <input asp-for="Champion" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Cup"></label>
+                    <input asp-for="Cup" class="form-control">
+                </div>
+
+                 <div class="form-group">
+                    <label asp-for="Win"></label>
+                    <input asp-for="Win" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Defeats"></label>
+                    <input asp-for="Defeats" class="form-control">
+                </div>
+
+            <div class="form-group">
+                    <label asp-for="PlayerId"></label>
+    <select asp-for="PlayerId" class="form-control"> 
+                    @foreach (var player in Model.Players)
+                    {
+              <option value="@player.Id">@player.Name</option>
+                    }
+    </select>
+    <span asp-validation-for="PlayerId" class="small text-danger"></span>
+ </div>
+            <br />
+            <input class="btn btn-primary" type="submit" value="Save" />
+        </form>
+            <br />
+    </div>
+</div>
+</div>

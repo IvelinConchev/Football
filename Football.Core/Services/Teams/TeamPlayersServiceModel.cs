@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class TeamPlayerServiceModel
+    public class TeamPlayersServiceModel
     {
         public Guid Id { get; init; }
 

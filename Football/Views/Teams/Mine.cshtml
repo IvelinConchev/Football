@@ -1,0 +1,13 @@
+﻿@model IEnumerable<TeamServiceModel>
+
+@{
+    ViewBag.Title = "My teams";
+    ViewBag.AllowTeamEdit = true;
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any players yet!</h2>
+}
+
+ <partial name="_TeamsPartial" model="@Model" />

@@ -1,5 +1,4 @@
-﻿@using Football.Models.Teams
-@model AllTeamQueryModel
+﻿@model AllTeamQueryModel
 
 @{
     ViewData["Title"] = "All Teams";
@@ -13,7 +12,7 @@
                 <select asp-for="Team" class="form-control">
                     <option value="">All</option>
 
-                    @foreach (var team in Model.Names)
+                    @foreach (var team in Model.Teams)
                     {
                         <option value="@team">@team</option>
                     }
@@ -72,21 +71,11 @@
     <br />
     <br />
 
-    <div class="row">
+    @if (!Model.Teams.Any())
+    {
+        <h2 class="text-center">No teams found by the given criteria! </h2>
+    }
 
-        @foreach (var team in Model.Teams)
-        {
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <img src="~/img/@team.Image" alt="@team.Name @team.NickName @team.AwayKit - @team.HomeKit ">
-                    @*<img src="@team.Image" alt="@team.Name @team.NickName @team.AwayKit - @team.HomeKit ">*@
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-center">@team.Name  @team.NickName @team.AwayKit</h5>
-                        <br />
-                        <a asp-controller="Teams" asp-action="Details" asp-route-id=@team.Id class="btn btn-primary">Виж повече</a>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>
+    <partial name="_TeamsPartial" model="@Model.Teams" />
+
+    
