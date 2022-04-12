@@ -29,7 +29,7 @@
         @if (firstPlayer != null)
         {
             <div class="carousel-item active">
-                <img src="@firstPlayer.ImageUrl" class="d-block w-100" alt="@firstPlayer.FirstName @firstPlayer.LastName @firstPlayer.Position @firstPlayer.Nationality @firstPlayer.Team @firstPlayer.Age">
+                <img src="~/img/@firstPlayer.ImageUrl" class="d-block w-100" alt="@firstPlayer.FirstName @firstPlayer.LastName @firstPlayer.Position @firstPlayer.Nationality @firstPlayer.Team @firstPlayer.Age">
                 <div class="carousel-caption d-none d-md-block">
                     <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@firstPlayer.Id">@firstPlayer.FirstName @firstPlayer.LastName - @firstPlayer.Position - @firstPlayer.Nationality - @firstPlayer.Team (@firstPlayer.Age)</a></h5>
                 </div>
@@ -39,7 +39,7 @@
         @if (secondPlayer != null)
         {
             <div class="carousel-item">
-                <img src="@secondPlayer.ImageUrl" class="d-block w-100" alt="@secondPlayer.FirstName @secondPlayer.LastName @secondPlayer.Position @secondPlayer.Nationality @secondPlayer.Team (@secondPlayer.Age)">
+                <img src="~/img/@secondPlayer.ImageUrl" class="d-block w-100" alt="@secondPlayer.FirstName @secondPlayer.LastName @secondPlayer.Position @secondPlayer.Nationality @secondPlayer.Team (@secondPlayer.Age)">
                 <div class="carousel-caption d-none d-md-block">
                     <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@firstPlayer.Id">@secondPlayer.FirstName @secondPlayer.LastName @secondPlayer.Position @secondPlayer.Nationality @secondPlayer.Team (@secondPlayer.Age)</a></h5>
                 </div>
@@ -48,7 +48,7 @@
         @if (thirdPlayer != null)
         {
             <div class="carousel-item">
-                <img src="@thirdPlayer.ImageUrl" class="d-block w-100" alt="@thirdPlayer.FirstName @thirdPlayer.LastName @thirdPlayer.Position @thirdPlayer.Nationality @thirdPlayer.Team @thirdPlayer.Age">
+                <img src="~/img/@thirdPlayer.ImageUrl" class="d-block w-100" alt="@thirdPlayer.FirstName @thirdPlayer.LastName @thirdPlayer.Position @thirdPlayer.Nationality @thirdPlayer.Team @thirdPlayer.Age">
                 <div class="carousel-caption d-none d-md-block">
                     <h5><a class="btn btn-primary" asp-controller="Players" asp-action="Details" asp-route-id="@thirdPlayer.Id">@thirdPlayer.FirstName @thirdPlayer.LastName @thirdPlayer.Position @thirdPlayer.Nationality @thirdPlayer.Team (@thirdPlayer.Age)</a></h5>
                 </div>
