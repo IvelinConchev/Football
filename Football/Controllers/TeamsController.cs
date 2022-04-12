@@ -1,141 +1,222 @@
 ﻿namespace Football.Controllers
 {
-    using Football.Infrastructure.Data;
-    using Football.Infrastructure.Data.Models;
-    using Football.Models.Teams;
+    using Football.Core.Contracts;
+    using Football.Core.Models.Teams;
+    using Football.Extensions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class TeamsController : Controller
     {
-        public readonly FootballDbContext data;
+        public readonly ITeamService teams;
+        private readonly IManagerService managers;
 
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public TeamsController(FootballDbContext _data, IWebHostEnvironment _webHostEnvironment)
+        public TeamsController(
+            ITeamService _teams,
+            IManagerService _managers,
+            IWebHostEnvironment _webHostEnvironment)
         {
-            this.data = _data;
+            this.teams = _teams;
+            this.managers = _managers;
             this.webHostEnvironment = _webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult All([FromQuery]
+               AllTeamQueryModel query)
         {
-            return View();
-        }
+            var queryResult = this.teams.All(
+                query.Team,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                AllTeamQueryModel.TeamPerPage);
 
-        public IActionResult All([FromQuery] AllTeamQueryModel query)
-        {
-            var teamQuery = this.data.Teams.AsQueryable();
+            var teamsPlayers = this.teams.AllPlayers();
 
-            if (!string.IsNullOrWhiteSpace(query.Team))
-            {
-                teamQuery = teamQuery.Where(p => p.Name == query.Team);
-            }
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                teamQuery = teamQuery.Where(p => p.Name.ToLower().Contains(query.SearchTerm.ToLower())
-                || p.NickName.ToLower().Contains(query.SearchTerm.ToLower())
-                || p.HeadCoach.ToLower().Contains(query.SearchTerm.ToLower())
-                || p.Description.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            teamQuery = query.Sorting switch
-            {
-                TeamSorting.Name => teamQuery.OrderBy(p => p.Name),
-                TeamSorting.Nickname => teamQuery.OrderByDescending(p => p.NickName),
-                TeamSorting.Cup => teamQuery.OrderBy(p => p.Cup),
-                TeamSorting.Champion => teamQuery.OrderBy(p => p.Champion)
-            };
-
-            var totalTeams = teamQuery.Count();
-
-            var teams = teamQuery
-                .Skip((query.CurrentPage - 1) * AllTeamQueryModel.TeamPerPage)
-                .Take(AllTeamQueryModel.TeamPerPage)
-                .Select(t => new TeamListingViewModel
-                {
-                    Id = t.Id,
-                    Address = t.Address,
-                    AwayKit = t.AwayKit,
-                    Champion = t.Champion,
-                    Cup = t.Cup,
-                    Defeats = t.Defeats,
-                    Description = t.Description,
-                    HeadCoach = t.HeadCoach,
-                    HomeKit = t.HomeKit,
-                    Image = t.Image,
-                    LogoUrl = t.LogoUrl,
-                    Name = t.Name,
-                    NickName = t.NickName,
-                    WebSite = t.WebSite,
-                    Win = t.Win
-                })
-                .ToList();
-
-            var teamP = this.data
-                .Teams
-                .Select(t => t.Name)
-                .Distinct()
-                .OrderBy(t => t)
-                .ToList();
-
-            query.TotalTeams = totalTeams;
-            query.Names = teamP;
-            query.Teams = teams;
-
+            //TODO
+            query.TeamCities = teamsPlayers;
+            query.TotalTeams = queryResult.TotalTeams;
+            query.Teams = queryResult.Teams;
 
             return View(query);
         }
-        public IActionResult Add() => View(new AddTeamFormModel
-        {
-            Players = this.GetPlayers(),
-        });
 
+        [Authorize]
+
+        public IActionResult Mine()
+        {
+            var myTeams = this.teams.ByUser(this.User.Id());
+
+            return View(myTeams);
+        }
+
+        [Authorize]
+
+        public IActionResult Add()
+        {
+            //if (!this.managers.isManager(this.User.Id()))
+            //{
+            //    return RedirectToAction(nameof(ManagersController.Become),
+            //        "Managers");
+            //}
+
+            return View(new TeamFormModel
+            {
+                //TODO
+                Players = this.teams.AllTeams()
+            });
+        }
 
         [HttpPost]
-        public IActionResult Add(AddTeamFormModel team)
+        [Authorize]
+
+        public IActionResult Add(TeamFormModel team)
         {
-            if (!ModelState.IsValid)
+            var managerId = this.managers.IdByUser(this.User.Id());
+
+            if (managerId.Equals(Guid.Empty))
             {
-                team.Players = this.GetPlayers();
+                return RedirectToAction(nameof(ManagersController.Become),
+                    "Managers");
+            }
+
+            if (!this.teams.PlayerExists(team.PlayerId))
+            {
+                this.ModelState.AddModelError(nameof(team.PlayerId),
+                    "Team does not exist.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                //team.Players = this.teams.AllPlayers();
 
                 return View(team);
             }
 
             string stringFileName = UploadFile(team);
 
-            var teamData = new Team
-            {
-                Name = team.Name,
-                Address = team.Address,
-                Image = stringFileName,
-                WebSite = team.WebSite,
-                HomeKit = team.HomeKit,
-                AwayKit = team.AwayKit,
-                Champion = team.Champion,
-                Cup = team.Cup,
-                Defeats = team.Defeats,
-                Description = team.Description,
-                HeadCoach = team.HeadCoach,
-                NickName = team.NickName,
-                LogoUrl = team.LogoUrl,
-                Win = team.Win,
-                PlayerId = team.PlayerId
-
-            };
-
-            this.data.Teams.Add(teamData);
-            this.data.SaveChanges();
+            this.teams.Create(
+                team.Name,
+                stringFileName,
+                team.WebSite,
+                team.LogoUrl,
+                team.HomeKit,
+                team.AwayKit,
+                team.NickName,
+                team.Description,
+                team.Address,
+                team.HeadCoach,
+                team.Champion,
+                team.Cup,
+                team.Win,
+                team.Defeats,
+                team.PlayerId,
+                managerId);
 
             return RedirectToAction(nameof(All));
         }
 
-        private string UploadFile(AddTeamFormModel model)
+        [Authorize]
+
+        public IActionResult Edit(Guid id)
+        {
+            var userId = this.User.Id();
+
+            if (!this.managers.isManager(userId) && !User.IsAdmin())
+            {
+                return RedirectToAction(nameof(ManagersController.Become),
+                    "Managers");
+            }
+
+            var team = this.teams.Details(id);
+
+            if (team.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new TeamFormModel
+            {
+                Name = team.Name,
+                //Image = team.Image,
+                WebSite = team.WebSite,
+                LogoUrl = team.LogoUrl,
+                HomeKit = team.HomeKit,
+                AwayKit = team.AwayKit,
+                NickName = team.NickName,
+                Description = team.Description,
+                Address = team.Address,
+                HeadCoach = team.HeadCoach,
+                Champion = team.Champion,
+                Cup = team.Cup,
+                Win = team.Win,
+                Defeats = team.Defeats,
+                PlayerId = team.PlayerId,
+                Players = this.teams.AllTeams()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+
+        public IActionResult Edit(Guid id, TeamFormModel team)
+        {
+            var managerId = this.managers.IdByUser(this.User.Id());
+
+            string stringFileName = UploadFile(team);
+
+            if (managerId.Equals(Guid.Empty) && !User.IsAdmin())
+            {
+                return RedirectToAction(nameof(ManagersController.Become), "Managers");
+            }
+
+            if (!this.teams.PlayerExists(team.PlayerId))
+            {
+                this.ModelState.AddModelError(nameof(team.PlayerId),
+                    "Player does not exist.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                team.Players = this.teams.AllTeams();
+
+                return View(team);
+            }
+
+            if (!this.teams.IsByManager(id, managerId) && !User.IsAdmin())
+            {
+                return BadRequest();
+            }
+
+            this.teams.Edit(
+                id,
+                team.Name,
+                stringFileName,
+                team.WebSite,
+                team.LogoUrl,
+                team.HomeKit,
+                team.AwayKit,
+                team.NickName,
+                team.Description,
+                team.Address,
+                team.HeadCoach,
+                team.Champion,
+                team.Cup,
+                team.Win,
+                team.Defeats,
+                team.PlayerId);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        private string UploadFile(TeamFormModel model)
         {
             string fileName = null;
             if (model.Image != null)
             {
-                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "img");
                 fileName = Guid.NewGuid().ToString() + "-" + model.Image.FileName;
                 string filePath = Path.Combine(uploadDir, fileName);
 
@@ -147,17 +228,6 @@
 
             return fileName;
         }
-
-        private IEnumerable<TeamPlayerViewModel> GetPlayers()
-       => this.data
-            .Players
-            .OrderBy(p => p.Team)
-            .Select(p => new TeamPlayerViewModel
-            {
-                Id = p.Id,
-                Team = p.Team
-            })
-            .ToList();
     }
 }
 

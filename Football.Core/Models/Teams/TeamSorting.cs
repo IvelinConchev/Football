@@ -1,4 +1,4 @@
-﻿namespace Football.Models.Teams
+﻿namespace Football.Core.Models.Teams
 {
     public enum TeamSorting
     {
